@@ -21,7 +21,10 @@ AddEventHandler('md_es:useScooter', function()
 			SetModelAsNoLongerNeeded(ESModel)
 			TaskWarpPedIntoVehicle(PlayerPedId(), ScooterEntity, -1)
 			usingScooter = true
-			TriggerServerEvent('md_es:useScooter', NetworkGetNetworkIdFromEntity(ScooterEntity))
+			TriggerServerEvent('md_es:sv_useScooter', NetworkGetNetworkIdFromEntity(ScooterEntity))
+			while not IsPedInAnyVehicle(PlayerPedId(), false) do
+				Citizen.Wait(10)
+			end
 			StartScooter()
 		else
 			-- Notification : Fail to spawn scooter
