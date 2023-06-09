@@ -14,10 +14,10 @@ AddEventHandler('md_es:useScooter', function()
 		end
 		local MyPed = PlayerPedId()
 		ScooterEntity = CreateVehicle(ESModel, GetEntityCoords(MyPed), GetEntityHeading(MyPed), true, false)
-		SetModelAsNoLongerNeeded(ESModel)
 		if DoesEntityExist(ScooterEntity) then
 			TaskWarpPedIntoVehicle(PlayerPedId(), ScooterEntity, -1)
 			SetVehicleAsNoLongerNeeded(ScooterEntity)
+			SetModelAsNoLongerNeeded(ESModel)
 			usingScooter = true
 			TriggerServerEvent('md_es:useScooter', NetworkGetNetworkIdFromEntity(ScooterEntity))
 			StartScooter()
