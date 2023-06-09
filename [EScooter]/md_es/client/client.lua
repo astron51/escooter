@@ -10,14 +10,16 @@ AddEventHandler('md_es:useScooter', function()
 	else
 		RequestModel(ESModel)
 		while not HasModelLoaded(ESModel) do
-			Citizen.Wait(0)
+			Citizen.Wait(500)
 		end
-		local MyPed = PlayerPedId()
-		ScooterEntity = CreateVehicle(ESModel, GetEntityCoords(MyPed), GetEntityHeading(MyPed), true, false)
+		local playerPed = PlayerPedId() -- get the local player ped
+		local pos = GetEntityCoords(playerPed) -- get the position of the local player ped
+		ScooterEntity = CreateVehicle(ESModel, pos.x, pos.y, pos.z, GetEntityHeading(playerPed), true, false)
 		if DoesEntityExist(ScooterEntity) then
-			TaskWarpPedIntoVehicle(PlayerPedId(), ScooterEntity, -1)
+			SetVehicleOnGroundProperly(ScooterEntity)
 			SetVehicleAsNoLongerNeeded(ScooterEntity)
 			SetModelAsNoLongerNeeded(ESModel)
+			TaskWarpPedIntoVehicle(PlayerPedId(), ScooterEntity, -1)
 			usingScooter = true
 			TriggerServerEvent('md_es:useScooter', NetworkGetNetworkIdFromEntity(ScooterEntity))
 			StartScooter()
